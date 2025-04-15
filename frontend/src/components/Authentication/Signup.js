@@ -1,11 +1,17 @@
 import { Button } from "@chakra-ui/button";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
+import { FormControl, FormLabel  } from "@chakra-ui/form-control";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
-import { VStack } from "@chakra-ui/layout";
+import { VStack, Stack } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
 import { useState } from "react";
 import { useHistory } from "react-router";
+import {
+ 
+  RadioGroup,
+  Radio
+} from "@chakra-ui/react";
+
 
 const Signup = () => {
   const [show, setShow] = useState(false);
@@ -17,12 +23,13 @@ const Signup = () => {
   const [email, setEmail] = useState();
   const [confirmpassword, setConfirmpassword] = useState();
   const [password, setPassword] = useState();
+  const [role, setRole] = useState("")
   //const [pic, setPic] = useState();
  // const [picLoading, setPicLoading] = useState(false);
 
   const submitHandler = async () => {
    // setPicLoading(true);
-    if (!name || !email || !password || !confirmpassword) {
+    if (!name || !email || !password || !confirmpassword || !role ) {
       toast({
         title: "Please Fill all the Feilds",
         status: "warning",
@@ -43,7 +50,7 @@ const Signup = () => {
       });
       return;
     }
-    console.log(name, email, password);
+    console.log(name, email, password , role);
     try {
       const config = {
         headers: {
@@ -56,6 +63,7 @@ const Signup = () => {
           name,
           email,
           password,
+          role,
           //pic,
         },
         config
@@ -197,6 +205,16 @@ const Signup = () => {
           </InputRightElement>
         </InputGroup>
       </FormControl>
+
+      <FormControl id="role" isRequired>
+  <FormLabel>Role</FormLabel>
+  <RadioGroup onChange={(value) => setRole(value)} value={role}>
+    <Stack direction="row">
+      <Radio value="Mentor">Mentor</Radio>
+      <Radio value="Mentee">Mentee</Radio>
+    </Stack>
+  </RadioGroup>
+</FormControl>
       {/* <FormControl id="pic">
         <FormLabel>Upload your Picture</FormLabel>
         <Input
@@ -206,6 +224,7 @@ const Signup = () => {
           onChange={(e) => postDetails(e.target.files[0])}
         />
       </FormControl> */}
+
       <Button
         colorScheme="blue"
         width="100%"

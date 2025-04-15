@@ -11,7 +11,15 @@ const userSchema = mongoose.Schema(
       required: true,
       default:
         "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+      
+      
     },
+    // role : {
+    //   type : "String" , 
+    //   required : true ,
+    //   default : "Mentee",
+    // },
+    role: { type: String, required: true, enum: ['Mentor', 'Mentee'], default: 'Mentee' },
     isAdmin: {
       type: Boolean,
       required: true,
